@@ -11,9 +11,10 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.channels.cache.get(channelId).send('Build bot is online!');
+ // client.channels.cache.get(channelId).send('Build bot is online!');
 });
   client.on('messageCreate', msg => {
+    console.log(msg.content);
      if (msg.content.startsWith('/build')) {
         let message = msg.content.slice(7);
         switch (message) {
@@ -26,7 +27,10 @@ client.on('ready', () => {
                   msg.reply('Build started')
                 }
               })
-              .catch(err => msg.reply(err));
+              .catch(err => {
+                console.log(err);
+                //msg.reply(err)
+              });
                 break;
             default:
                 msg.reply('fail');

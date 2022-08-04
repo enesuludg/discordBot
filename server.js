@@ -19,9 +19,7 @@ client.on('ready', () => {
         let message = msg.content.slice(7);
         switch (message) {
             case 'test':
-              axios.get(`${jenkinsUrl}/job/test/build`,{ params: {
-                token: jenkinsToken
-              }})
+              axios.get(jenkinsUrl)
               .then(response => {
                 if(response.status===201){
                   msg.reply('Build started')

@@ -1,5 +1,4 @@
 require('dotenv').config();
-const { default: axios } = require('axios');
 const { Client, Intents,GatewayIntentBits } = require('discord.js');
 const express = require('express');
 const axios = require('axios');

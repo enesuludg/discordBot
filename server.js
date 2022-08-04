@@ -45,10 +45,8 @@ app.get('/', (req, res) => {
     res.send('hello world')
   });
   app.post('/build', (req, res) => {
-    console.log('req.body');
-    console.log(req.body);
     const {link,name} = req.body;
-    console((`${link} and ${name}`))
+    console.log((`${link} and ${name}`))
    /*  client.channels.cache.get(channelId).send(` ${req.body.name} Build successfully!`);
     client.channels.cache.get(channelId).send(`${req.body.link}`) */
 

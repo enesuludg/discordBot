@@ -11,7 +11,7 @@ const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
- // client.channels.cache.get(channelId).send('Build bot is online!');
+ client.channels.cache.get(channelId).send('Build bot is online!');
 });
   client.on('messageCreate', msg => {
     console.log(msg.content);

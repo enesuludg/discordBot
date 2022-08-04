@@ -8,7 +8,9 @@ const jenkinsToken=process.env.JENKINS_TOKEN;
 const channelId=process.env.CHANNEL_ID;
 const port = process.env.PORT || 3000;
 const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits.DirectMessages,GatewayIntentBits.DirectMessageTyping,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessageReactions] });
-
+app.configure(function(){
+  app.use(express.bodyParser());
+});
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
  client.channels.cache.get(channelId).send('Build bot is online!');
@@ -43,6 +45,7 @@ app.get('/', (req, res) => {
     res.send('hello world')
   })
   app.post('/build', (req, res) => {
+    console.log('req.body');
     console.log(req.body);
     //const {link,name} = req.body;
     client.channels.cache.get(channelId).send(` ${req.body.name} Build successfully!`);

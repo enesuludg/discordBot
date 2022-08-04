@@ -19,7 +19,7 @@ client.on('ready', () => {
         let message = msg.content.slice(7);
         switch (message) {
             case 'test':
-              axios.get(`${jenkinsUrl}/job/test/test/build`,{ params: {
+              axios.get(`${jenkinsUrl}/job/test/build`,{ params: {
                 token: jenkinsToken
               }})
               .then(response => {
@@ -29,7 +29,7 @@ client.on('ready', () => {
               })
               .catch(err => {
                 console.log(err);
-                //msg.reply(err)
+                msg.reply('Build error')
               });
                 break;
             default:

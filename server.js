@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
- client.channels.cache.get(channelId).send('Build bot is online!');
+ //client.channels.cache.get(channelId).send('Build bot is online!');
 });
   client.on('messageCreate', msg => {
     console.log(msg.content);
@@ -43,13 +43,14 @@ client.login(process.env.BOT_TOKEN);
 
 app.get('/', (req, res) => {
     res.send('hello world')
-  })
+  });
   app.post('/build', (req, res) => {
     console.log('req.body');
     console.log(req.body);
-    //const {link,name} = req.body;
-    client.channels.cache.get(channelId).send(` ${req.body.name} Build successfully!`);
-    client.channels.cache.get(channelId).send(`${req.body.link}`)
+    const {link,name} = req.body;
+    console((`${link} and ${name}`))
+   /*  client.channels.cache.get(channelId).send(` ${req.body.name} Build successfully!`);
+    client.channels.cache.get(channelId).send(`${req.body.link}`) */
 
     res.send('Build success')
   })

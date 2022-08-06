@@ -56,9 +56,20 @@ client.on('ready', () => {
 
 client.login(process.env.BOT_TOKEN);
 
-app.get('/', (req, res) => {
-    res.send('hello world')
-  });
+router.get('/', async (_req, res, _next) => {
+
+  const healthcheck = {
+      uptime: process.uptime(),
+      message: 'OK',
+      timestamp: Date.now()
+  };
+  try {
+      res.send(healthcheck);
+  } catch (error) {
+      healthcheck.message = error;
+      res.status(503).send(healthcheck);
+  }
+});
 app.post('/build', (req, res) => {
     const {link,name} = req.body;
     client.channels.cache.get(channelId).send(` ${name} Build successfully!`);

@@ -3,7 +3,8 @@ const { Client, Intents,GatewayIntentBits } = require('discord.js');
 const express = require('express');
 const axios = require('axios');
 const app = express()
-const jenkinsUrl =process.env.JENKINS_URL;
+const jenkinsUrlTest =process.env.JENKINS_URL;
+const jenkinsUrlScore =process.env.JENKINS_URL;
 const channelId=process.env.CHANNEL_ID;
 const port = process.env.PORT || 3000;
 const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits.DirectMessages,GatewayIntentBits.DirectMessageTyping,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessageReactions] });
@@ -20,7 +21,7 @@ client.on('ready', () => {
         let message = msg.content.slice(7);
         switch (message) {
             case 'test':
-              axios.get(jenkinsUrl)
+              axios.get(jenkinsUrlTest)
               .then(response => {
                 if(response.status===201){
                   msg.reply('Build started')
@@ -31,6 +32,18 @@ client.on('ready', () => {
                 msg.reply('Build error')
               });
                 break;
+              case 'score':
+                axios.get(jenkinsUrlScore)
+                .then(response => {
+                  if(response.status===201){
+                    msg.reply('Build started')
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                  msg.reply('Build error')
+                });
+                  break;
             default:
                 msg.reply('fail');
                 break;

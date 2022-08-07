@@ -57,7 +57,6 @@ client.on('ready', () => {
 client.login(process.env.BOT_TOKEN);
 
 router.get('/', async (_req, res, _next) => {
-
   const healthcheck = {
       uptime: process.uptime(),
       message: 'OK',

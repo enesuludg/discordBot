@@ -5,7 +5,7 @@ import axios from 'axios';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { readdir } from'fs/promises';
-import  path from'path';
+import  path from 'path';
 dotenv.config();
 
 const app = express()
@@ -90,10 +90,10 @@ app.post('/upload', async (req, res) => {
       req.socket.setTimeout(10 * 60 * 1000);
     const {directory} = req.body;
     const file = await findByExtension(directory,'ipa');
-    const path =directory+file;
+    const ipaPath =directory+file;
     const name = path.basename(file, '.ipa')
     const result = await upload({
-      file: path,
+      file: ipaPath,
       token: diawiToken,
     });
     client.channels.cache.get(channelId).send(` ${name} Build successfully!`);

@@ -32,6 +32,10 @@ client.on('ready', () => {
         if(message.length >= 2) params=true;
         switch (message[1]) {
             case 'test':
+              if(!params) {
+                msg.reply('if there is sdk in the project it will give an error');
+                msg.reply(`example: /build ${message[1]} sdk`);
+              } 
               axios.get(`${jenkinsUrlPipeline1}&pod=${params}`)
               .then(response => {
                 if(response.status===201){
@@ -46,7 +50,7 @@ client.on('ready', () => {
               case 'score':
                 if(!params) {
                   msg.reply('if there is sdk in the project it will give an error');
-                  msg.reply('example: /build score sdk');
+                  msg.reply(`example: /build ${message[1]} sdk`);
                 } 
                 axios.get(`${jenkinsUrlPipeline2}&pod=${params}`)
                 .then(response => {
@@ -62,7 +66,7 @@ client.on('ready', () => {
               case 'trivia':
                 if(!params) {
                   msg.reply('if there is sdk in the project it will give an error');
-                  msg.reply('example: /build trivia sdk');
+                  msg.reply(`example: /build ${message[1]} sdk`);
                 } 
                 axios.get(`${jenkinsUrlPipeline3}&pod=${params}`)
                 .then(response => {

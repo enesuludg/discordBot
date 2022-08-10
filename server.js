@@ -44,7 +44,11 @@ client.on('ready', () => {
               });
                 break;
               case 'score':
-                axios.get(`${jenkinsUrlPipeline2}&pod=true`)
+                if(!params) {
+                  msg.reply('if there is sdk in the project it will give an error');
+                  msg.reply('example: /build score sdk');
+                } 
+                axios.get(`${jenkinsUrlPipeline2}&pod=${params}`)
                 .then(response => {
                   if(response.status===201){
                     msg.reply('Build started')
@@ -56,7 +60,11 @@ client.on('ready', () => {
                 });
                   break;
               case 'trivia':
-                axios.get(`${jenkinsUrlPipeline3}&pod=true`)
+                if(!params) {
+                  msg.reply('if there is sdk in the project it will give an error');
+                  msg.reply('example: /build trivia sdk');
+                } 
+                axios.get(`${jenkinsUrlPipeline3}&pod=${params}`)
                 .then(response => {
                   if(response.status===201){
                     msg.reply('Build started')
@@ -97,7 +105,7 @@ app.post('/build', (req, res) => {
     client.channels.cache.get(channelId).send(` ${name} Build successfully!`);
     client.channels.cache.get(channelId).send(`${link}`) 
     res.send('Build success')
-  })
+})
 
 app.post('/upload', async (req, res, next) => {
     try {

@@ -87,11 +87,11 @@ app.post('/build', (req, res) => {
 
 app.post('/upload', async (req, res) => {
     try {
-      req.socket.setTimeout(10 * 60 * 1000);
+      req.socket.setTimeout(5 * 60 * 1000);
     const {directory} = req.body;
     const file = await findByExtension(directory,'ipa');
     const ipaPath =directory+file;
-    const name = path.basename(file, '.ipa')
+    const name = path.basename(file, '.ipa');
     const result = await upload({
       file: ipaPath,
       token: diawiToken,

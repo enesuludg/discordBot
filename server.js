@@ -104,6 +104,14 @@ app.get('/', async (_req, res) => {
       res.status(503).send(healthcheck);
   }
 });
+app.get('/error', async (_req, res) => {
+  try {
+    client.channels.cache.get(channelId).send(`Build error!`);
+    res.status(200);
+  } catch (error) {
+      res.status(503).send(error);
+  }
+});
 app.post('/build', (req, res) => {
     const {link,name} = req.body;
     client.channels.cache.get(channelId).send(` ${name} Build successfully!`);

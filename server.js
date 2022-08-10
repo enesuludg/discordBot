@@ -3,26 +3,26 @@ import express from 'express';
 import { upload } from 'diawi-nodejs-uploader';
 import axios from 'axios';
 import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
 import { readdir } from'fs/promises';
 import  path from 'path';
-dotenv.config();
+import {
+  jenkinsUrlPipeline1,
+  jenkinsUrlPipeline2,
+  jenkinsUrlPipeline3,
+  channelId,
+  port,
+  diawiToken,
+  discordToken
+} from './config.js';
 
 const app = express()
-const jenkinsUrlPipeline1 =process.env.JENKINS_URL;
-const jenkinsUrlPipeline2 =process.env.JENKINS_URL2;
-const jenkinsUrlPipeline3 =process.env.JENKINS_URL3;
-
-const channelId=process.env.CHANNEL_ID;
-const port = process.env.PORT || 3000;
-const diawiToken = process.env.DIAWI_TOKEN;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits.DirectMessages,GatewayIntentBits.DirectMessageTyping,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessageReactions] });
 app.use(bodyParser.json())
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  client.channels.cache.get(channelId).send('Build bot is online!');
+  //client.channels.cache.get(channelId).send('Build bot is online!');
 });
   client.on('messageCreate', msg => {
     console.log(msg.content);
@@ -77,7 +77,7 @@ client.on('ready', () => {
       }
     });
 
-client.login(process.env.BOT_TOKEN);
+client.login(discordToken);
 
 app.get('/', async (_req, res) => {
   const healthcheck = {

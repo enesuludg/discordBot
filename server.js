@@ -99,7 +99,7 @@ app.post('/build', (req, res) => {
     res.send('Build success')
   })
 
-app.post('/upload', async (req, res) => {
+app.post('/upload', async (req, res, next) => {
     try {
       req.socket.setTimeout(5 * 60 * 1000);
     const {directory} = req.body;
@@ -112,6 +112,7 @@ app.post('/upload', async (req, res) => {
     });
     client.channels.cache.get(channelId).send(` ${name} Build successfully!`);
     client.channels.cache.get(channelId).send(`${result.link}`); 
+    next();
     res.status(200);
   } catch (error) {
       console.error(error);

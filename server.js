@@ -11,6 +11,8 @@ dotenv.config();
 const app = express()
 const jenkinsUrlPipeline1 =process.env.JENKINS_URL;
 const jenkinsUrlPipeline2 =process.env.JENKINS_URL2;
+const jenkinsUrlPipeline3 =process.env.JENKINS_URL3;
+
 const channelId=process.env.CHANNEL_ID;
 const port = process.env.PORT || 3000;
 const diawiToken = process.env.DIAWI_TOKEN;
@@ -20,7 +22,7 @@ app.use(bodyParser.json())
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  //client.channels.cache.get(channelId).send('Build bot is online!');
+  client.channels.cache.get(channelId).send('Build bot is online!');
 });
   client.on('messageCreate', msg => {
     console.log(msg.content);
@@ -53,7 +55,19 @@ client.on('ready', () => {
                   msg.reply('Build error')
                 });
                   break;
-            default:
+              case 'trivia':
+                axios.get(`${jenkinsUrlPipeline3}&pod=true`)
+                .then(response => {
+                  if(response.status===201){
+                    msg.reply('Build started')
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                  msg.reply('Build error')
+                });
+                  break;
+              default:
                 msg.reply('fail');
                 break;
         }

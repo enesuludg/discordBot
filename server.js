@@ -123,7 +123,12 @@ client.on('ready', () => {
             throw err
           }     
           console.log(data)
-          msg.reply(data.toString());
+          let res= new Array();
+          for (const job of data) {
+            res.push(`pipeline name: ${job.name} pipeline color: ${job.color}`);
+          }
+
+          msg.reply(res.toString());
         });
       }
     });

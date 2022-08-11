@@ -12,11 +12,12 @@ import {
   channelId,
   port,
   diawiToken,
-  discordToken
+  discordToken,
+  baseUrl
 } from './config.js';
 import jenkinsHandler from 'jenkins';
 import { pipeline } from './pipeline.js';
-const jenkins = new jenkinsHandler({ baseUrl: process.env.BASEURL, crumbIssuer: true });
+const jenkins = new jenkinsHandler({ baseUrl: baseUrl, crumbIssuer: true });
 const app = express()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits.DirectMessages,GatewayIntentBits.DirectMessageTyping,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessageReactions] });

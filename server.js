@@ -6,9 +6,7 @@ import bodyParser from 'body-parser';
 import { readdir } from'fs/promises';
 import  path from 'path';
 import {
-  jenkinsUrlPipeline1,
-  jenkinsUrlPipeline2,
-  jenkinsUrlPipeline3,
+  jenkinsParams,
   channelId,
   port,
   diawiToken,
@@ -33,7 +31,17 @@ client.on('ready', () => {
         let message = msg.content.split(' ');
         let params=false;
         if(message.length >= 2) params=true;
-        switch (message[1]) {
+        axios.get(`${baseUrl}/job/${message[1]}${jenkinsParams}&pod=${params}`)
+              .then(response => {
+                if(response.status===201){
+                  msg.reply('Build started')
+                }
+              })
+              .catch(err => {
+                console.log(err);
+                msg.reply('Build error')
+              });
+        /* switch (message[1]) {
             case 'test':
               if(!params) {
                 msg.reply('if there is sdk in the project it will give an error');
@@ -85,23 +93,37 @@ client.on('ready', () => {
               default:
                 msg.reply('fail');
                 break;
-        }
+        } */
       }
       if (msg.content.startsWith('/create')) {
         let message = msg.content.split('/create ');
         if (message.length === 1) {
           msg.reply('syntax error');
-          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo", "sdk": false }`);
+          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo"}`);
         }
         const githubUrl=JSON.parse(message[1]).github;
+        const pipelineName=JSON.parse(message[1]).name;
         const xml = pipeline(githubUrl);
-        jenkins.job.create('example', xml, function(err) {
-          if (err) throw err;
+        jenkins.job.create(pipelineName, xml, function(err) {
+          if (err) {
+            msg.reply(`${pipelineName} pipeline not created`);
+            throw err
+          }
+          msg.reply(`${pipelineName} pipeline created`);
         });
 
       }
       if (msg.content==='/status') {
         msg.reply('Active');
+      }
+      if (msg.content.startsWith('/list')) {
+        jenkins.job.list(function(err, data) {
+          if (err) {
+            msg.reply(`erorr`);
+            throw err
+          }     
+          msg.reply(data);
+        });
       }
     });
 

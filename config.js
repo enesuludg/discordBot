@@ -10,3 +10,4 @@ export const port = process.env.PORT || 3000;
 export const diawiToken = process.env.DIAWI_TOKEN;
 export const discordToken=process.env.BOT_TOKEN;
 export const baseUrl=process.env.BASEURL
+export const jenkinsParams = process.env.PARAMS

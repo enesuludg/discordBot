@@ -14,7 +14,9 @@ import {
   diawiToken,
   discordToken
 } from './config.js';
-
+import jenkinsHandler from 'jenkins';
+import { pipeline } from './pipeline.js';
+const jenkins = new jenkinsHandler({ baseUrl: process.env.BASEURL, crumbIssuer: true });
 const app = express()
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,GatewayIntentBits.DirectMessages,GatewayIntentBits.DirectMessageTyping,GatewayIntentBits.GuildMessages,GatewayIntentBits.MessageContent,GatewayIntentBits.DirectMessageReactions] });
@@ -83,6 +85,19 @@ client.on('ready', () => {
                 msg.reply('fail');
                 break;
         }
+      }
+      if (msg.content.startsWith('/create')) {
+        let message = msg.content.split('/create ');
+        if (message.length === 1) {
+          msg.reply('syntax error');
+          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo", "pod": true }`);
+        }
+        const githubUrl=JSON.parse(message.split('/create ')[1]).github;
+        const xml = pipeline(githubUrl);
+        jenkins.job.create('example', xml, function(err) {
+          if (err) throw err;
+        });
+
       }
       if (msg.content==='/status') {
         msg.reply('Active');

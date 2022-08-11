@@ -125,14 +125,13 @@ client.on('ready', () => {
           console.log(data)
           let res= new Array();
           for (const job of data) {
-            res.push(`pipeline name: ${job.name} pipeline color: ${job.color}`);
+            res.push(`pipeline name: ${job.name} pipeline color: ${job.color} \n`);
           }
 
           msg.reply(res.toString());
         });
       }
     });
-
 client.login(discordToken);
 
 app.get('/', async (_req, res) => {

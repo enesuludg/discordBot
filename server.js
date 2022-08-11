@@ -125,7 +125,7 @@ client.on('ready', () => {
           console.log(data)
           let res= new Array();
           for (const job of data) {
-            res.push(`pipeline name: ${job.name} pipeline color: ${job.color} \n`);
+            res.push(`\n pipeline name: ${job.name} pipeline color: ${job.color} `);
           }
 
           msg.reply(res.toString());

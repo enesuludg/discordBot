@@ -122,6 +122,7 @@ client.on('ready', () => {
             msg.reply(`erorr`);
             throw err
           }     
+          console.log(data)
           msg.reply(data);
         });
       }

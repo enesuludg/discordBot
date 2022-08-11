@@ -91,9 +91,9 @@ client.on('ready', () => {
         let message = msg.content.split('/create ');
         if (message.length === 1) {
           msg.reply('syntax error');
-          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo", "pod": true }`);
+          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo", "sdk": false }`);
         }
-        const githubUrl=JSON.parse(message.split('/create ')[1]).github;
+        const githubUrl=JSON.parse(message[1]).github;
         const xml = pipeline(githubUrl);
         jenkins.job.create('example', xml, function(err) {
           if (err) throw err;

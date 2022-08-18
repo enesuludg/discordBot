@@ -153,6 +153,7 @@ app.get('/', async (_req, res) => {
   }
 });
 app.get('/error', async (req, res) => {
+  console.log(req.params);
   const {name} = req.params;
   try {
     client.channels.cache.get(channelId).send(`${name} Build error!`);

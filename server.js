@@ -154,11 +154,12 @@ app.get('/', async (_req, res) => {
 });
 app.get('/error', async (req, res) => {
   console.log(req.params);
-  const {name} = req.params;
+  const { name } = req.params;
   try {
-    client.channels.cache.get(channelId).send(`${name} Build error!`);
+   //  client.channels.cache.get(channelId).send(`${name} Build error!`);
     res.status(200);
   } catch (error) {
+      console.error(error);
       res.status(503).send(error);
   }
 });

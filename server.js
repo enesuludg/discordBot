@@ -125,9 +125,15 @@ client.on('ready', () => {
           console.log(data)
           let res= new Array();
           for (const job of data) {
-            res.push(`\n pipeline name: ${job.name} pipeline color: ${job.color} `);
+            if(job.color.includes('anime')){
+              job.color='Running';
+            }else if(job.color === 'blue'){
+              job.color='Completed';
+            }else{
+              job.color='Failed or aborted';
+            }
+            res.push(`\n Name: ${job.name} State: ${job.color} `);
           }
-
           msg.reply(res.toString());
         });
       }
@@ -147,9 +153,10 @@ app.get('/', async (_req, res) => {
       res.status(503).send(healthcheck);
   }
 });
-app.get('/error', async (_req, res) => {
+app.get('/error', async (req, res) => {
+  const {name} = req.params;
   try {
-    client.channels.cache.get(channelId).send(`Build error!`);
+    client.channels.cache.get(channelId).send(`${name} Build error!`);
     res.status(200);
   } catch (error) {
       res.status(503).send(error);

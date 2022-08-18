@@ -26,7 +26,6 @@ client.on('ready', () => {
   //client.channels.cache.get(channelId).send('Build bot is online!');
 });
   client.on('messageCreate', msg => {
-    console.log(msg.content);
      if (msg.content.startsWith('/build')) {
         let message = msg.content.split(' ');
         let params=false;

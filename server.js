@@ -28,8 +28,7 @@ client.on('ready', () => {
   client.on('messageCreate', msg => {
      if (msg.content.startsWith('/build')) {
         let message = msg.content.split(' ');
-        let params=false;
-        if(message.length >= 2) params=true;
+        let params=msg.content.includes('sdk');
         axios.get(`${baseUrl}/job/${message[1]}${jenkinsParams}&pod=${params}`)
               .then(response => {
                 if(response.status===201){
@@ -40,59 +39,6 @@ client.on('ready', () => {
                 console.log(err);
                 msg.reply('Build error')
               });
-        /* switch (message[1]) {
-            case 'test':
-              if(!params) {
-                msg.reply('if there is sdk in the project it will give an error');
-                msg.reply(`example: /build ${message[1]} sdk`);
-              } 
-              axios.get(`${jenkinsUrlPipeline1}&pod=${params}`)
-              .then(response => {
-                if(response.status===201){
-                  msg.reply('Build started')
-                }
-              })
-              .catch(err => {
-                console.log(err);
-                msg.reply('Build error')
-              });
-                break;
-              case 'score':
-                if(!params) {
-                  msg.reply('if there is sdk in the project it will give an error');
-                  msg.reply(`example: /build ${message[1]} sdk`);
-                } 
-                axios.get(`${jenkinsUrlPipeline2}&pod=${params}`)
-                .then(response => {
-                  if(response.status===201){
-                    msg.reply('Build started')
-                  }
-                })
-                .catch(err => {
-                  console.log(err);
-                  msg.reply('Build error')
-                });
-                  break;
-              case 'trivia':
-                if(!params) {
-                  msg.reply('if there is sdk in the project it will give an error');
-                  msg.reply(`example: /build ${message[1]} sdk`);
-                } 
-                axios.get(`${jenkinsUrlPipeline3}&pod=${params}`)
-                .then(response => {
-                  if(response.status===201){
-                    msg.reply('Build started')
-                  }
-                })
-                .catch(err => {
-                  console.log(err);
-                  msg.reply('Build error')
-                });
-                  break;
-              default:
-                msg.reply('fail');
-                break;
-        } */
       }
       if (msg.content.startsWith('/create')) {
         let message = msg.content.split('/create ');

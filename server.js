@@ -11,10 +11,14 @@ import {
   port,
   diawiToken,
   discordToken,
-  baseUrl
+  baseUrl,
+  config
 } from './config.js';
 import jenkinsHandler from 'jenkins';
 import { pipeline } from './pipeline.js';
+import  checkInternetConnected from 'check-internet-connected';
+import * as child from 'child_process';
+
 const jenkins = new jenkinsHandler({ baseUrl: baseUrl, crumbIssuer: true });
 const app = express()
 
@@ -150,3 +154,16 @@ const findByExtension = async (dir, ext) => {
   return matchedFiles;
 };
 app.listen(port, () => console.log(` ${port} Build app listening on port 3000!`))
+
+setInterval(async () => {checkInternetConnected(config)
+  .then(() => {
+  })
+  .catch((ex) => {
+    child.exec('pm2 restart 0',
+      (error) => {
+          if (error !== null) {
+              console.error(`exec error: ${error}`);
+          }
+      });
+    console.log(ex); // cannot connect to a server or error occurred.
+  }); }, 10000);

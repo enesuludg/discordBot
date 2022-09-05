@@ -102,6 +102,25 @@ app.get('/', async (_req, res) => {
       res.status(503).send(healthcheck);
   }
 });
+app.get('/restart', async (_req, res) => {
+  const healthcheck = {
+      uptime: process.uptime(),
+      message: 'OK',
+      timestamp: Date.now()
+  };
+  try {
+    child.exec('pm2 restart 0',
+      (error) => {
+          if (error !== null) {
+              console.error(`exec error: ${error}`);
+          }
+      });
+      res.send(healthcheck);
+  } catch (error) {
+      healthcheck.message = error;
+      res.status(503).send(healthcheck);
+  }
+});
 app.get('/error', async (req, res) => {
   const { name } = req.query;
   try {

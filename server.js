@@ -18,6 +18,7 @@ import jenkinsHandler from 'jenkins';
 import { pipeline } from './pipeline.js';
 import  checkInternetConnected from 'check-internet-connected';
 import * as child from 'child_process';
+import * as cron from 'node-cron'
 
 const jenkins = new jenkinsHandler({ baseUrl: baseUrl, crumbIssuer: true });
 const app = express()
@@ -186,3 +187,13 @@ setInterval(async () => {checkInternetConnected(config)
       });
     console.log(ex); // cannot connect to a server or error occurred.
   }); }, 10000);
+
+cron.schedule('0 9 * * *', () => {
+  console.log('cron pm2 restart 0');
+  child.exec('pm2 restart 0',
+      (error) => {
+          if (error !== null) {
+              console.error(`exec error: ${error}`);
+          }
+      });
+});

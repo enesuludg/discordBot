@@ -56,13 +56,14 @@ client.on('ready', () => {
         let branch=JSON.parse(message[1]).branch;
         if(!branch) branch='main';
         const xml = pipeline(githubUrl,branch);
-        jenkins.job.create(pipelineName, xml, function(err) {
+        console.log(xml)
+        /* jenkins.job.create(pipelineName, xml, function(err) {
           if (err) {
             msg.reply(`${pipelineName} pipeline not created`);
             throw err
           }
           msg.reply(`${pipelineName} pipeline created`);
-        });
+        }); */
 
       }
       if (msg.content==='/status') {

@@ -38,7 +38,7 @@ export const pipeline = (githubUrl,branch) => {
         </userRemoteConfigs>
         <branches>
           <hudson.plugins.git.BranchSpec>
-            <name>*/${branch}<</name>
+            <name>*/${branch}</name>
           </hudson.plugins.git.BranchSpec>
         </branches>
         <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>

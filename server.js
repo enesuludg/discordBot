@@ -49,11 +49,13 @@ client.on('ready', () => {
         let message = msg.content.split('/create ');
         if (message.length === 1) {
           msg.reply('syntax error');
-          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo"}`);
+          msg.reply(`example: /create { "name":"game nickname", "github":"github shh repo",branch:"branch name"}`);
         }
         const githubUrl=JSON.parse(message[1]).github;
         const pipelineName=JSON.parse(message[1]).name;
-        const xml = pipeline(githubUrl);
+        let branch=JSON.parse(message[1]).branch;
+        if(!branch) branch='main';
+        const xml = pipeline(githubUrl,branch);
         jenkins.job.create(pipelineName, xml, function(err) {
           if (err) {
             msg.reply(`${pipelineName} pipeline not created`);

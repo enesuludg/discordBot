@@ -144,7 +144,7 @@ app.post('/build', (req, res) => {
 
 app.post('/upload', async (req, res, next) => {
     try {
-      req.socket.setTimeout(5 * 60 * 1000);
+      req.socket.setTimeout(8 * 60 * 1000);
     const {directory} = req.body;
     const file = await findByExtension(directory,'ipa');
     const ipaPath =directory+file;
